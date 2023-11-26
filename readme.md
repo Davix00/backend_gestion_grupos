@@ -37,8 +37,8 @@ Tienes que crear en la raiz del proyecto un archivo .env con la siguiente estruc
     PORT = 3000
 
     USER = ''
-    PASSWORD = 'localhost'
-    SERVER = ''
+    PASSWORD = ''
+    SERVER = 'localhost'
     DATABASE = ''
 
 Los datos del .env deben ser correspondientes a tu SQlServer. 
