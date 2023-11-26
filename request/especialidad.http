@@ -1,0 +1,32 @@
+### RUTAS APIS DIVISION
+@api = http://localhost:3000/especialidades
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "nombre": "TSU en Gastronomía",
+    "descripcion": "TSU en gastro",
+    "idDivision": 2
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/2
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/
+
+
+### EDITAR POR ID
+PUT {{api}}/update/3
+Content-Type: application/json
+
+{
+    "nombre": "LIC en Gastronomía",
+    "descripcion": "LIC en gastro",
+    "idDivision": 2
+}

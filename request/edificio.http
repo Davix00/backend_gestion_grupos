@@ -27,6 +27,6 @@ Content-Type: application/json
 
 {
     "nombre": "D4",
-    "descripcion": "Edificon de Mecatrónica",
+    "descripcion": "Edificon de Gastronomía",
     "idDivision": 2
 }

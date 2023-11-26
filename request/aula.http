@@ -1,5 +1,5 @@
 ### RUTAS APIS DIVISION
-@api = http://localhost:3000/division
+@api = http://localhost:3000/aulas
 
 ### LISTAR
 GET {{api}}/get
@@ -9,22 +9,24 @@ POST {{api}}/create
 Content-Type: application/json
 
 {
-    "nombre":"Gastronomía",
-    "descripcion": "Departamento de Gastronomía"
+    "nombre":"103",
+    "descripcion": "Laboratorio",
+    "idEdificio": 1
 }
 
 ### LISTAR POR ID
-GET {{api}}/getbid/3
+GET {{api}}/getbid/15
 
 ### ELIMINAR POR ID
 DELETE {{api}}/delete/3
 
 
 ### EDITAR POR ID
-PUT {{api}}/update/2
+PUT {{api}}/update/15
 Content-Type: application/json
 
 {
-    "nombre":"Gastronomía",
-    "descripcion": "Departamento de Gastronomía"
+    "nombre":"109",
+    "descripcion": "Laboratorio",
+    "idEdificio": 1
 }
