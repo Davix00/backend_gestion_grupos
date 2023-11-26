@@ -1,0 +1,42 @@
+### RUTAS APIS DIVISION
+@api = http://localhost:3000/division
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "idRegion": 2,
+    "razonSocial": "Gruas Agua Santa" ,
+    "direccion": "INFONAVIT Agua Santa, 72490 Heroica Puebla de Zaragoza, Pue.",
+    "latitud": "18.98961947022881",
+    "longitud": "-98.24374524439315",
+    "diasHabiles": "1|2|3",
+    "responsable": "Blanca Cortez",
+    "telefono": "2223267879"
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/6
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/5
+
+
+### EDITAR POR ID
+PUT {{api}}/update/6
+Content-Type: application/json
+
+{
+    "idRegion": 2,
+    "razonSocial": "Gruas Agua Santa" ,
+    "direccion": "INFONAVIT Agua Santa, 72490 Heroica Puebla de Zaragoza, Pue.",
+    "latitud": "18.98961947022881",
+    "longitud": "-98.24374524439315",
+    "diasHabiles": "1|2|3",
+    "responsable": "Fernando Cortez",
+    "telefono": "2223267879"
+}
