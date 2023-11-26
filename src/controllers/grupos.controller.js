@@ -1,12 +1,12 @@
 import { getConection, sql } from '../database/conection';
 import { HTTP_STATUS, MESSAGES } from '../database/status';
 
-export const getEspecialidades = async (req, res) => {
+export const getGrupos = async (req, res) => {
     try {
         const pool = await getConection();
 
         const result = await pool.request()
-        .query('SELECT e.IDespecialidad, e.NombresEspecialidad, e.DescripcionEsp, e.DivisionID, d.NombreDivision FROM Especialidades AS e LEFT JOIN Divisiones AS d ON e.DivisionID =  d.IDdivision;');
+        .query('SELECT g.IDgrupo, g.NombreGrupo, g.Cuatrimestre, g.Turno, g.PeriodoID, g.EspecialidadID, e.NombresEspecialidad FROM Grupos as g LEFT JOIN	Especialidades as e	ON g.EspecialidadID = e.IDespecialidad;');
 
         if (result.recordset){
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
@@ -17,18 +17,20 @@ export const getEspecialidades = async (req, res) => {
     }
 };
 
-export const createEspecialidad = async (req, res) => {
-    const { nombre, descripcion, idDivision} =  req.body;
+export const createGrupo = async (req, res) => {
+    const { nombre, cuatrimestre, turno, idPeriodo, idEspecialidad} =  req.body;
 
-    if (nombre && descripcion && idDivision) {
+    if (nombre && cuatrimestre && turno && idPeriodo && idEspecialidad) {
         try {
             const pool = await getConection();
 
             await pool.request()
             .input('nombre', sql.VarChar, nombre)
-            .input('descripcion', sql.VarChar, descripcion)
-            .input('idDivision', sql.Int, idDivision)
-            .query('INSERT INTO Especialidades (NombresEspecialidad, DescripcionEsp, DivisionID) VALUES (@nombre, @descripcion, @idDivision);');
+            .input('cuatrimestre', sql.Int, cuatrimestre)
+            .input('turno', sql.VarChar, turno)
+            .input('idPeriodo', sql.Int, idPeriodo)
+            .input('idEspecialidad', sql.Int, idEspecialidad)
+            .query('INSERT INTO Grupos (NombreGrupo, Cuatrimestre, Turno, PeriodoID, EspecialidadID) VALUES (@nombre, @cuatrimestre, @turno, @idPeriodo, @idEspecialidad);');
         
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -38,14 +40,15 @@ export const createEspecialidad = async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST).
         json({msg: MESSAGES.BAD_REQUEST,  content: { 
                 "nombre": nombre,
-                "descripcion": descripcion,
-                "idDivision": idDivision
+                "cuatrimestre": cuatrimestre,
+                "truno": turno,
+                "idPeriodo": idPeriodo
             }
         });
     }     
 };
 
-export const getEspecialidadById = async (req, res) => {
+export const getGrupoById = async (req, res) => {
     const { id } =  req.params;
     if(id){
         try {
@@ -53,7 +56,7 @@ export const getEspecialidadById = async (req, res) => {
 
             const result = await pool.request()
             .input('id',id)
-            .query('SELECT e.IDespecialidad, e.NombresEspecialidad, e.DescripcionEsp, e.DivisionID, d.NombreDivision FROM Especialidades AS e LEFT JOIN Divisiones AS d ON e.DivisionID =  d.IDdivision WHERE IDespecialidad = @id;');
+            .query('SELECT g.IDgrupo, g.NombreGrupo, g.Cuatrimestre, g.Turno, g.PeriodoID, g.EspecialidadID, e.NombresEspecialidad FROM Grupos as g LEFT JOIN	Especialidades as e	ON g.EspecialidadID = e.IDespecialidad WHERE IDgrupo = @id;');
 
             if(result.recordset[0]){
                 return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
@@ -67,7 +70,7 @@ export const getEspecialidadById = async (req, res) => {
     }
 };
 
-export const deleteEspecialidadById = async (req,res) => {
+export const deleteGrupoById = async (req,res) => {
     const { id } =  req.params;
     if(id){
         try {
@@ -75,7 +78,7 @@ export const deleteEspecialidadById = async (req,res) => {
 
             await pool.request()
             .input('id',id)
-            .query('DELETE FROM Especialidades WHERE IDespecialidad = @id;');
+            .query('DELETE FROM Grupos WHERE IDgrupo = @id;');
 
             return res.status(HTTP_STATUS.DELETE_SUCCES);   
         } catch (error) {
@@ -86,20 +89,21 @@ export const deleteEspecialidadById = async (req,res) => {
     }
 };
 
-
-export const updateEspecialidadById = async (req, res) => {
-    const { nombre, descripcion, idDivision } =  req.body;
+export const updateGrupoById = async (req, res) => {
+    const { nombre, cuatrimestre, turno, idPeriodo, idEspecialidad } =  req.body;
     const { id } = req.params;
-    if (id && nombre && descripcion && idDivision) {
+    if (id && nombre && cuatrimestre && turno && idPeriodo && idEspecialidad) {
         try {
             const pool = await getConection();
 
             await pool.request()
-            .input('id', sql.Int, id)
-            .input('idDivision', sql.Int, idDivision)
+            .input('id', id)
             .input('nombre', sql.VarChar, nombre)
-            .input('descripcion', sql.VarChar, descripcion)
-            .query('UPDATE Especialidades SET NombresEspecialidad = @nombre, DescripcionEsp = @descripcion, DivisionID = @idDivision WHERE IDespecialidad = @id;');
+            .input('cuatrimestre', sql.Int, cuatrimestre)
+            .input('turno', sql.VarChar, turno)
+            .input('idPeriodo', sql.Int, idPeriodo)
+            .input('idEspecialidad', sql.Int, idEspecialidad)
+            .query('UPDATE Grupos SET NombreGrupo = @nombre, Cuatrimestre = @cuatrimestre, Turno = @turno, PeriodoID = @idPeriodo, EspecialidadID = @idEspecialidad WHERE IDGrupo = @id;');
             
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -109,9 +113,10 @@ export const updateEspecialidadById = async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST)
         .json({msg: MESSAGES.BAD_REQUEST, content:{
                 "id": id,
-                "idDivision": idDivision,
                 "nombre": nombre,
-                "descripcion": descripcion
+                "fechaInicio": fechaInicio,
+                "fechaFin": fechaFin,
+                "anio": anio
             }
         });
     } 

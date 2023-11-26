@@ -1,12 +1,12 @@
 import { getConection, sql } from '../database/conection';
 import { HTTP_STATUS, MESSAGES } from '../database/status';
 
-export const getEspecialidades = async (req, res) => {
+export const getPeriodos = async (req, res) => {
     try {
         const pool = await getConection();
 
         const result = await pool.request()
-        .query('SELECT e.IDespecialidad, e.NombresEspecialidad, e.DescripcionEsp, e.DivisionID, d.NombreDivision FROM Especialidades AS e LEFT JOIN Divisiones AS d ON e.DivisionID =  d.IDdivision;');
+        .query('SELECT * FROM Periodos;');
 
         if (result.recordset){
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
@@ -17,18 +17,19 @@ export const getEspecialidades = async (req, res) => {
     }
 };
 
-export const createEspecialidad = async (req, res) => {
-    const { nombre, descripcion, idDivision} =  req.body;
+export const createPeriodo = async (req, res) => {
+    const { nombre, fechaInicio, fechaFin, anio} =  req.body;
 
-    if (nombre && descripcion && idDivision) {
+    if (nombre && fechaInicio && fechaFin && anio) {
         try {
             const pool = await getConection();
 
             await pool.request()
             .input('nombre', sql.VarChar, nombre)
-            .input('descripcion', sql.VarChar, descripcion)
-            .input('idDivision', sql.Int, idDivision)
-            .query('INSERT INTO Especialidades (NombresEspecialidad, DescripcionEsp, DivisionID) VALUES (@nombre, @descripcion, @idDivision);');
+            .input('fechaInicio', sql.Date, fechaInicio)
+            .input('fechaFin', sql.Date, fechaFin)
+            .input('anio', sql.Int, anio)
+            .query('INSERT INTO Periodos (NombrePeriodo, P_inicio, P_Fin, Año) VALUES (@nombre, @fechaInicio, @fechaFin, @anio);');
         
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -38,14 +39,15 @@ export const createEspecialidad = async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST).
         json({msg: MESSAGES.BAD_REQUEST,  content: { 
                 "nombre": nombre,
-                "descripcion": descripcion,
-                "idDivision": idDivision
+                "fechaInicio": descripcion,
+                "fechaFin": idDivision,
+                "anio": anio
             }
         });
     }     
 };
 
-export const getEspecialidadById = async (req, res) => {
+export const getPerodioById = async (req, res) => {
     const { id } =  req.params;
     if(id){
         try {
@@ -53,7 +55,7 @@ export const getEspecialidadById = async (req, res) => {
 
             const result = await pool.request()
             .input('id',id)
-            .query('SELECT e.IDespecialidad, e.NombresEspecialidad, e.DescripcionEsp, e.DivisionID, d.NombreDivision FROM Especialidades AS e LEFT JOIN Divisiones AS d ON e.DivisionID =  d.IDdivision WHERE IDespecialidad = @id;');
+            .query('SELECT * FROM Periodos WHERE IDperiodo = @id;');
 
             if(result.recordset[0]){
                 return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
@@ -67,7 +69,7 @@ export const getEspecialidadById = async (req, res) => {
     }
 };
 
-export const deleteEspecialidadById = async (req,res) => {
+export const deletePeriodoById = async (req,res) => {
     const { id } =  req.params;
     if(id){
         try {
@@ -75,7 +77,7 @@ export const deleteEspecialidadById = async (req,res) => {
 
             await pool.request()
             .input('id',id)
-            .query('DELETE FROM Especialidades WHERE IDespecialidad = @id;');
+            .query('DELETE FROM Periodos WHERE IDperiodo = @id;');
 
             return res.status(HTTP_STATUS.DELETE_SUCCES);   
         } catch (error) {
@@ -86,20 +88,20 @@ export const deleteEspecialidadById = async (req,res) => {
     }
 };
 
-
-export const updateEspecialidadById = async (req, res) => {
-    const { nombre, descripcion, idDivision } =  req.body;
+export const updatePeriodoById = async (req, res) => {
+    const { nombre, fechaInicio, fechaFin, anio } =  req.body;
     const { id } = req.params;
-    if (id && nombre && descripcion && idDivision) {
+    if (id && nombre && fechaInicio && fechaFin && anio) {
         try {
             const pool = await getConection();
 
             await pool.request()
             .input('id', sql.Int, id)
-            .input('idDivision', sql.Int, idDivision)
             .input('nombre', sql.VarChar, nombre)
-            .input('descripcion', sql.VarChar, descripcion)
-            .query('UPDATE Especialidades SET NombresEspecialidad = @nombre, DescripcionEsp = @descripcion, DivisionID = @idDivision WHERE IDespecialidad = @id;');
+            .input('fechaInicio', sql.Date, fechaInicio)
+            .input('fechaFin', sql.Date, fechaFin)
+            .input('anio', sql.Int, anio)
+            .query('UPDATE Periodos SET NombrePeriodo = @nombre, P_inicio = @fechaInicio, P_Fin = @fechaFin WHERE IDperiodo = @id;');
             
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -109,9 +111,10 @@ export const updateEspecialidadById = async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST)
         .json({msg: MESSAGES.BAD_REQUEST, content:{
                 "id": id,
-                "idDivision": idDivision,
                 "nombre": nombre,
-                "descripcion": descripcion
+                "fechaInicio": fechaInicio,
+                "fechaFin": fechaFin,
+                "anio": anio
             }
         });
     } 

@@ -1,0 +1,34 @@
+### RUTAS APIS DIVISION
+@api = http://localhost:3000/periodo
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+    "nombre": "Septiembre-Diciembre",
+    "fechaInicio": "2023-09-02T00:00:00.000Z",
+    "fechaFin": "2023-12-02T00:00:00.000Z",
+    "anio": 2023
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/1
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/1
+
+
+### EDITAR POR ID
+PUT {{api}}/update/1
+Content-Type: application/json
+
+{
+    "nombre": "Mayo-Agosto",
+    "fechaInicio": "2023-05-02T00:00:00.000Z",
+    "fechaFin": "2023-08-02T00:00:00.000Z",
+    "anio": 2023
+}

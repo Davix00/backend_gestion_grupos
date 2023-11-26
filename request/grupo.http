@@ -1,0 +1,36 @@
+### RUTAS APIS DIVISION
+@api = http://localhost:3000/grupo
+
+### LISTAR
+GET {{api}}/get
+
+### CREAR
+POST {{api}}/create
+Content-Type: application/json
+
+{
+      "nombre": "F",
+      "cuatrimestre": 2,
+      "turno": "Matutino",
+      "idPeriodo": 1,
+      "idEspecialidad": 1
+}
+
+### LISTAR POR ID
+GET {{api}}/getbid/5
+
+### ELIMINAR POR ID
+DELETE {{api}}/delete/6
+
+
+### EDITAR POR ID
+PUT {{api}}/update/5
+Content-Type: application/json
+
+{
+      "nombre": "F",
+      "cuatrimestre": 2,
+      "turno": "Matutino",
+      "idPeriodo": 1,
+      "idEspecialidad": 1
+}

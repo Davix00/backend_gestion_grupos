@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ### LISTAR POR ID
-GET {{api}}/getbid/2
+GET {{api}}/getbid/3
 
 ### ELIMINAR POR ID
 DELETE {{api}}/delete/
