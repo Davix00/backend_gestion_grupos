@@ -1,12 +1,12 @@
 import { getConection, sql } from '../database/conection';
-import { HTTP_STATUS, MESSAGES } from '../database/status';
+import { HTTP_STATUS, MESSAGES} from '../database/status'
 
-export const getDivisiones = async (req, res) => {
+export const getEdificos = async (req, res) => {
     try {
         const pool = await getConection();
 
         const result = await pool.request()
-        .query('SELECT * FROM Divisiones;');
+        .query('SELECT e.IDedificio, e.NombreEdificio, e.DescripcionEdif, e.DivisionID, d.NombreDivision  FROM Edificios AS e LEFT JOIN Divisiones AS d ON e.DivisionID = d.IDdivision;');
 
         if (result.recordset){
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
@@ -17,17 +17,19 @@ export const getDivisiones = async (req, res) => {
     }
 };
 
-export const createDivison = async (req, res) => {
-    const { nombre, descripcion} =  req.body;
-    if (nombre && descripcion) {
+export const createEdificio = async (req, res) => {
+    const { nombre, descripcion, idDivision} =  req.body;
+
+    if (nombre && descripcion && idDivision) {
         try {
             const pool = await getConection();
 
             await pool.request()
             .input('nombre', sql.VarChar, nombre)
             .input('descripcion', sql.VarChar, descripcion)
-            .query('INSERT INTO Divisiones (NombreDivision, DescripcionDiv) VALUES (@nombre, @descripcion);');
-            
+            .input('idDivision', sql.Int, idDivision)
+            .query('INSERT INTO Edificios (NombreEdificio, DescripcionEdif, DivisionID) VALUES (@nombre, @descripcion, @idDivision);');
+        
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR,error});
@@ -36,13 +38,14 @@ export const createDivison = async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST).
         json({msg: MESSAGES.BAD_REQUEST,  content: { 
                 "nombre": nombre,
-                "descripcion": descripcion 
+                "descripcion": descripcion,
+                "idDivision": idDivision
             }
         });
     }     
 };
 
-export const getDivisionById = async (req, res) => {
+export const getEdificiosById = async (req, res) => {
     const { id } =  req.params;
     if(id){
         try {
@@ -50,7 +53,7 @@ export const getDivisionById = async (req, res) => {
 
             const result = await pool.request()
             .input('id',id)
-            .query('SELECT * FROM Divisiones WHERE IDdivision = @id;');
+            .query('SELECT e.IDedificio, e.NombreEdificio, e.DescripcionEdif, e.DivisionID, d.NombreDivision  FROM Edificios AS e LEFT JOIN Divisiones AS d ON e.DivisionID = d.IDdivision WHERE IDedificio = @id;');
 
             if(result.recordset[0]){
                 return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
@@ -64,7 +67,7 @@ export const getDivisionById = async (req, res) => {
     }
 };
 
-export const deleteDivisionById = async (req,res) => {
+export const deleteEdificioById = async (req,res) => {
     const { id } =  req.params;
     if(id){
         try {
@@ -72,7 +75,7 @@ export const deleteDivisionById = async (req,res) => {
 
             await pool.request()
             .input('id',id)
-            .query('DELETE FROM Divisiones WHERE IDdivision = @id;');
+            .query('DELETE FROM Edificios WHERE IDedificio = @id;');
 
             return res.status(HTTP_STATUS.DELETE_SUCCES);   
         } catch (error) {
@@ -84,18 +87,19 @@ export const deleteDivisionById = async (req,res) => {
 };
 
 
-export const updateDivisonById = async (req, res) => {
-    const { nombre, descripcion } =  req.body;
+export const updateEdificioById = async (req, res) => {
+    const { nombre, descripcion, idDivision } =  req.body;
     const { id } = req.params;
-    if (id && nombre && descripcion) {
+    if (id && nombre, descripcion, idDivision) {
         try {
             const pool = await getConection();
 
             await pool.request()
-            .input('id',id)
+            .input('id', sql.Int, id)
+            .input('idDivision', sql.Int, idDivision)
             .input('nombre', sql.VarChar, nombre)
             .input('descripcion', sql.VarChar, descripcion)
-            .query('UPDATE Divisiones SET NombreDivision = @nombre WHERE IDdivision = @id;');
+            .query('UPDATE Edificios SET NombreEdificio = @nombre, DescripcionEdif = @descripcion, DivisionID = @idDivision WHERE IDedificio = @id;');
             
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -105,6 +109,7 @@ export const updateDivisonById = async (req, res) => {
         return res.status(HTTP_STATUS.BAD_REQUEST)
         .json({msg: MESSAGES.BAD_REQUEST, content:{
                 "id": id,
+                "idDivision": idDivision,
                 "nombre": nombre,
                 "descripcion": descripcion
             }

@@ -1,5 +1,5 @@
 ### RUTAS APIS DIVISION
-@api = http://localhost:3000/division
+@api = http://localhost:3000/edificio
 
 ### LISTAR
 GET {{api}}/get
@@ -9,8 +9,9 @@ POST {{api}}/create
 Content-Type: application/json
 
 {
-    "nombre":"Gastronomía",
-    "descripcion": "Departamento de Gastronomía"
+    "nombre": "D4",
+    "descripcion": "Edificon de Mecatrónica",
+    "idDivision": 2
 }
 
 ### LISTAR POR ID
@@ -25,6 +26,7 @@ PUT {{api}}/update/2
 Content-Type: application/json
 
 {
-    "nombre":"a",
-    "descripcion": "Departamento de Gastronomía"
+    "nombre": "D4",
+    "descripcion": "Edificon de Mecatrónica",
+    "idDivision": 2
 }
