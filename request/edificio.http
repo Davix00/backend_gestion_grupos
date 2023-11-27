@@ -18,7 +18,7 @@ Content-Type: application/json
 GET {{api}}/getbid/3
 
 ### ELIMINAR POR ID
-DELETE {{api}}/delete/3
+DELETE {{api}}/delete/2
 
 
 ### EDITAR POR ID
@@ -27,6 +27,6 @@ Content-Type: application/json
 
 {
     "nombre": "D4",
-    "descripcion": "Edificon de Gastronomía",
+    "descripcion": "Edificio de Gastronomía",
     "idDivision": 2
 }

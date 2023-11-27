@@ -17,7 +17,7 @@ export const getDivisiones = async (req, res) => {
     }
 };
 
-export const createDivison = async (req, res) => {
+export const createDivision = async (req, res) => {
     const { nombre, descripcion} =  req.body;
     if (nombre && descripcion) {
         try {
@@ -95,7 +95,7 @@ export const updateDivisonById = async (req, res) => {
             .input('id',id)
             .input('nombre', sql.VarChar, nombre)
             .input('descripcion', sql.VarChar, descripcion)
-            .query('UPDATE Divisiones SET NombreDivision = @nombre WHERE IDdivision = @id;');
+            .query('UPDATE Divisiones SET NombreDivision = @nombre, DescripcionDiv = @descripcion WHERE IDdivision = @id;');
             
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {

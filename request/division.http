@@ -17,14 +17,14 @@ Content-Type: application/json
 GET {{api}}/getbid/3
 
 ### ELIMINAR POR ID
-DELETE {{api}}/delete/3
+DELETE {{api}}/delete/2
 
 
 ### EDITAR POR ID
-PUT {{api}}/update/2
+PUT {{api}}/update/1
 Content-Type: application/json
 
 {
-    "nombre":"Gastronomía",
-    "descripcion": "Departamento de Gastronomía"
+    "nombre": "Tecnologías de la Información y Comunicación",
+    "descripcion": "Departamento de Ti"
 }

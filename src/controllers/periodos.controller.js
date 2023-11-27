@@ -101,7 +101,7 @@ export const updatePeriodoById = async (req, res) => {
             .input('fechaInicio', sql.Date, fechaInicio)
             .input('fechaFin', sql.Date, fechaFin)
             .input('anio', sql.Int, anio)
-            .query('UPDATE Periodos SET NombrePeriodo = @nombre, P_inicio = @fechaInicio, P_Fin = @fechaFin WHERE IDperiodo = @id;');
+            .query('UPDATE Periodos SET NombrePeriodo = @nombre, P_inicio = @fechaInicio, P_Fin = @fechaFin, Año = @anio WHERE IDperiodo = @id;');
             
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {

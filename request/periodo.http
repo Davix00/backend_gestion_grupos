@@ -30,5 +30,5 @@ Content-Type: application/json
     "nombre": "Mayo-Agosto",
     "fechaInicio": "2023-05-02T00:00:00.000Z",
     "fechaFin": "2023-08-02T00:00:00.000Z",
-    "anio": 2023
+    "anio": 2024
 }
