@@ -27,8 +27,8 @@ PUT {{api}}/update/1
 Content-Type: application/json
 
 {
-    "nombre": "Mayo-Agosto",
-    "fechaInicio": "2023-05-02T00:00:00.000Z",
+    "nombre": "Mayo-Septiembre",
+    "fechaInicio": "2023-05-02",
     "fechaFin": "2023-08-02T00:00:00.000Z",
-    "anio": 2023
+    "anio": 2024
 }
