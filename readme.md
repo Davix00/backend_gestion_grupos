@@ -8,11 +8,11 @@ Backend creado en su totalidad con EXPRESS JS para uso de SQLSERVER.
 
 - __Database:__ Contiene las funciones necesarias para la conexión a la base de datos y los estatus de respuesta a las peticiones.
 
-- __Routes:__ En esta carpet se crean clases donde se creara cada ruta de las apis para los controladores.
+- __Routes:__ Contiene los archivos de rutas para cada una de las apis de los controladores.
 
 ## Archivos esenciales
 
-- __app.js:__ Este archivo configura la aplicación Express con ciertos middleware, configura el puerto y utiliza rutas específicas relacionadas con los cada ruta de los controladores.
+- __app.js:__ Este archivo configura la aplicación Express con ciertos middlewares además de configurar el puerto y utilizar rutas específicas relacionadas con los cada ruta de los controladores.
 
 - __index.js:__ En este archivo instanciamos a app y configuramos el puerto por donde la aplicacion estara echuchando.
 
@@ -58,6 +58,10 @@ Los datos del .env deben ser correspondientes a tu SQlServer.
 3. Debes de activar la comunicacion TCP/IP para eso puedes revisar la documentación oficial: [Activar TCP/IP][2]
 
 [2]: https://learn.microsoft.com/es-es/sql/database-engine/configure-windows/configure-a-server-to-listen-on-a-specific-tcp-port?view=sql-server-ver16
+
+## Importante
+
+Algunas apis de eliminación no funcionan debido a que el campo tiene hijos que referencian su clave primaria, y las llaves foraneas no estan condfiguradas para hace eliminación en cascada.
 
 ## Ejemplos de uso de las rutas
 
