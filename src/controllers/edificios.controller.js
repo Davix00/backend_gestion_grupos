@@ -30,7 +30,7 @@ export const createEdificio = async (req, res) => {
             .input('idDivision', sql.Int, idDivision)
             .query('INSERT INTO Edificios (NombreEdificio, DescripcionEdif, DivisionID) VALUES (@nombre, @descripcion, @idDivision);');
         
-            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS}); 
         } catch (error) {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR,error});
         }
@@ -77,7 +77,7 @@ export const deleteEdificioById = async (req,res) => {
             .input('id',id)
             .query('DELETE FROM Edificios WHERE IDedificio = @id;');
 
-            return res.status(HTTP_STATUS.DELETE_SUCCES);   
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});   
         } catch (error) {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
         }

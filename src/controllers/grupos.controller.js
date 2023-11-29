@@ -80,7 +80,7 @@ export const deleteGrupoById = async (req,res) => {
             .input('id',id)
             .query('DELETE FROM Grupos WHERE IDgrupo = @id;');
 
-            return res.status(HTTP_STATUS.DELETE_SUCCES);   
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});   
         } catch (error) {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
         }

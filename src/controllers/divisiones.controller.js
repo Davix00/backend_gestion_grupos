@@ -73,8 +73,8 @@ export const deleteDivisionById = async (req,res) => {
             await pool.request()
             .input('id',id)
             .query('DELETE FROM Divisiones WHERE IDdivision = @id;');
-
-            return res.status(HTTP_STATUS.DELETE_SUCCES);   
+            
+            return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});   
         } catch (error) {
             return res.status(HTTP_STATUS.DATABASE_ERROR).json({msg: MESSAGES.DATABASE_ERROR, error});
         }

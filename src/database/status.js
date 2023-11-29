@@ -3,7 +3,6 @@ export const HTTP_STATUS = {
   NOT_FOUND: 404,
   DATABASE_ERROR: 500,
   BAD_REQUEST: 400,
-  DELETE_SUCCES: 204,
 };
 
 export const MESSAGES = {
