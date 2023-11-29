@@ -32,7 +32,7 @@ export const createGrupo = async (req, res) => {
             .input('idAula', sql.Int, idAula)
             .input('idTutor', sql.Int, idTutor)
             .input('idEspecialidad', sql.Int, idEspecialidad)
-            .query('INSERT INTO Grupos (NombreGrupo, Cuatrimestre, Turno, PeriodoID, AulaID, TutorID, EspecialidadID) VALUES (@nombre, @cuatrimestre, @turno, @idPeriodo, @idAula, @idTutor @idEspecialidad);');
+            .query('INSERT INTO Grupos (NombreGrupo, Cuatrimestre, Turno, PeriodoID, AulaID, TutorID, EspecialidadID) VALUES (@nombre, @cuatrimestre, @turno, @idPeriodo, @idAula, @idTutor, @idEspecialidad);');
         
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {

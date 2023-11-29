@@ -9,10 +9,12 @@ POST {{api}}/create
 Content-Type: application/json
 
 {
-      "nombre": "F",
-      "cuatrimestre": 2,
+      "nombre": "Z",
+      "cuatrimestre": 7,
       "turno": "Matutino",
       "idPeriodo": 1,
+      "idAula": 14,
+      "idTutor": 665,
       "idEspecialidad": 1
 }
 
@@ -28,9 +30,11 @@ PUT {{api}}/update/5
 Content-Type: application/json
 
 {
-      "nombre": "F",
-      "cuatrimestre": 2,
-      "turno": "Matutino",
+      "nombre": "h",
+      "cuatrimestre": 4,
+      "turno": "Vespertino",
       "idPeriodo": 1,
-      "idEspecialidad": 1
+      "idAula": 1,
+      "idTutor": 3,
+      "idEspecialidad": 3
 }
