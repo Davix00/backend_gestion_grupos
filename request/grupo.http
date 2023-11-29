@@ -14,7 +14,6 @@ Content-Type: application/json
       "turno": "Matutino",
       "idPeriodo": 1,
       "idAula": 14,
-      "idTutor": 665,
       "idEspecialidad": 1
 }
 
@@ -26,15 +25,14 @@ DELETE {{api}}/delete/6
 
 
 ### EDITAR POR ID
-PUT {{api}}/update/5
+PUT {{api}}/update/11
 Content-Type: application/json
 
 {
-      "nombre": "h",
+      "nombre": "l",
       "cuatrimestre": 4,
       "turno": "Vespertino",
       "idPeriodo": 1,
       "idAula": 1,
-      "idTutor": 3,
       "idEspecialidad": 3
 }
