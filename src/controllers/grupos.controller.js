@@ -6,7 +6,7 @@ export const getGrupos = async (req, res) => {
         const pool = await getConection();
 
         const result = await pool.request()
-        .query('SELECT g.IDgrupo, g.NombreGrupo, g.Cuatrimestre, g.Turno, g.PeriodoID, g.EspecialidadID, e.NombresEspecialidad FROM Grupos as g LEFT JOIN	Especialidades as e	ON g.EspecialidadID = e.IDespecialidad;');
+        .query('SELECT g.IDgrupo, g.NombreGrupo, g.Cuatrimestre, g.PeriodoID ,p.NombrePeriodo, g.Turno, g.AulaID, a.NombreAula,	g.TutorID, d.Nombres AS NombreTutor, g.EspecialidadID, e.NombresEspecialidad FROM Grupos as g LEFT JOIN Especialidades AS e ON g.EspecialidadID = e.IDespecialidad LEFT JOIN Docente AS d ON g.TutorID = d.IDdocente LEFT JOIN Aulas AS a ON g.AulaID = a.IDAula LEFT JOIN Periodos AS p ON g.PeriodoID = p.IDperiodo;');
 
         if (result.recordset){
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset});
@@ -18,9 +18,9 @@ export const getGrupos = async (req, res) => {
 };
 
 export const createGrupo = async (req, res) => {
-    const { nombre, cuatrimestre, turno, idPeriodo, idEspecialidad} =  req.body;
+    const { nombre, cuatrimestre, turno, idPeriodo, idEspecialidad, idAula, idTutor} =  req.body;
 
-    if (nombre && cuatrimestre && turno && idPeriodo && idEspecialidad) {
+    if (nombre && cuatrimestre && turno && idPeriodo && idEspecialidad && idAula && idTutor) {
         try {
             const pool = await getConection();
 
@@ -29,8 +29,10 @@ export const createGrupo = async (req, res) => {
             .input('cuatrimestre', sql.Int, cuatrimestre)
             .input('turno', sql.VarChar, turno)
             .input('idPeriodo', sql.Int, idPeriodo)
+            .input('idAula', sql.Int, idAula)
+            .input('idTutor', sql.Int, idTutor)
             .input('idEspecialidad', sql.Int, idEspecialidad)
-            .query('INSERT INTO Grupos (NombreGrupo, Cuatrimestre, Turno, PeriodoID, EspecialidadID) VALUES (@nombre, @cuatrimestre, @turno, @idPeriodo, @idEspecialidad);');
+            .query('INSERT INTO Grupos (NombreGrupo, Cuatrimestre, Turno, PeriodoID, AulaID, TutorID, EspecialidadID) VALUES (@nombre, @cuatrimestre, @turno, @idPeriodo, @idAula, @idTutor @idEspecialidad);');
         
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -41,8 +43,11 @@ export const createGrupo = async (req, res) => {
         json({msg: MESSAGES.BAD_REQUEST,  content: { 
                 "nombre": nombre,
                 "cuatrimestre": cuatrimestre,
-                "truno": turno,
-                "idPeriodo": idPeriodo
+                "turno": turno,
+                "idPeriodo": idPeriodo,
+                "idAula": idAula,
+                "idTutor": idTutor,
+                "idEspecialidad": idEspecialidad
             }
         });
     }     
@@ -56,7 +61,7 @@ export const getGrupoById = async (req, res) => {
 
             const result = await pool.request()
             .input('id',id)
-            .query('SELECT g.IDgrupo, g.NombreGrupo, g.Cuatrimestre, g.Turno, g.PeriodoID, g.EspecialidadID, e.NombresEspecialidad FROM Grupos as g LEFT JOIN	Especialidades as e	ON g.EspecialidadID = e.IDespecialidad WHERE IDgrupo = @id;');
+            .query('SELECT g.IDgrupo, g.NombreGrupo, g.Cuatrimestre, g.PeriodoID ,p.NombrePeriodo, g.Turno, g.AulaID, a.NombreAula,	g.TutorID, d.Nombres AS NombreTutor, g.EspecialidadID, e.NombresEspecialidad FROM Grupos as g LEFT JOIN Especialidades AS e ON g.EspecialidadID = e.IDespecialidad LEFT JOIN Docente AS d ON g.TutorID = d.IDdocente LEFT JOIN Aulas AS a ON g.AulaID = a.IDAula LEFT JOIN Periodos AS p ON g.PeriodoID = p.IDperiodo WHERE IDgrupo = @id;');
 
             if(result.recordset[0]){
                 return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS, content: result.recordset[0]});   
@@ -90,9 +95,9 @@ export const deleteGrupoById = async (req,res) => {
 };
 
 export const updateGrupoById = async (req, res) => {
-    const { nombre, cuatrimestre, turno, idPeriodo, idEspecialidad } =  req.body;
+    const { nombre, cuatrimestre, turno, idPeriodo, idEspecialidad, idAula, idTutor } =  req.body;
     const { id } = req.params;
-    if (id && nombre && cuatrimestre && turno && idPeriodo && idEspecialidad) {
+    if (id && nombre && cuatrimestre && turno && idPeriodo && idEspecialidad && idTutor) {
         try {
             const pool = await getConection();
 
@@ -102,8 +107,10 @@ export const updateGrupoById = async (req, res) => {
             .input('cuatrimestre', sql.Int, cuatrimestre)
             .input('turno', sql.VarChar, turno)
             .input('idPeriodo', sql.Int, idPeriodo)
+            .input('idAula', sql.Int, idAula)
+            .input('idTutor', sql.Int, idTutor)
             .input('idEspecialidad', sql.Int, idEspecialidad)
-            .query('UPDATE Grupos SET NombreGrupo = @nombre, Cuatrimestre = @cuatrimestre, Turno = @turno, PeriodoID = @idPeriodo, EspecialidadID = @idEspecialidad WHERE IDGrupo = @id;');
+            .query('UPDATE Grupos SET NombreGrupo = @nombre, Cuatrimestre = @cuatrimestre, Turno = @turno, PeriodoID = @idPeriodo, AulaID = @idAula, TutorID = @idTutor, EspecialidadID = @idEspecialidad WHERE IDGrupo = @id;');
             
             return res.status(HTTP_STATUS.SUCCESS).json({msg: MESSAGES.SUCCESS});
         } catch (error) {
@@ -112,11 +119,13 @@ export const updateGrupoById = async (req, res) => {
     } else {
         return res.status(HTTP_STATUS.BAD_REQUEST)
         .json({msg: MESSAGES.BAD_REQUEST, content:{
-                "id": id,
                 "nombre": nombre,
-                "fechaInicio": fechaInicio,
-                "fechaFin": fechaFin,
-                "anio": anio
+                "cuatrimestre": cuatrimestre,
+                "turno": turno,
+                "idPeriodo": idPeriodo,
+                "idAula": idAula,
+                "idTutor": idTutor,
+                "idEspecialidad": idEspecialidad
             }
         });
     } 
