@@ -2,24 +2,6 @@
 
 Backend creado en su totalidad con EXPRESS JS para uso de SQLSERVER.
 
-## Carpetas
-    
-- __Controllers:__  Contiene las funciones que se necesitara para cada entidad de la base de datos.
-
-- __Database:__ Contiene las funciones necesarias para la conexión a la base de datos y los estatus de respuesta a las peticiones.
-
-- __Routes:__ Contiene los archivos de rutas para cada una de las apis de los controladores.
-
-## Archivos esenciales
-
-- __app.js:__ Este archivo configura la aplicación Express con ciertos middlewares además de configurar el puerto y utilizar rutas específicas relacionadas con los cada ruta de los controladores.
-
-- __index.js:__ En este archivo instanciamos a app y configuramos el puerto por donde la aplicacion estara echuchando.
-
-- __config.js:__ En este archivo importamos las variables de entorno que necesarias.
-
-- __.babelrc:__ Archivo de configración de babel para la correcta integracion de las dependencias y plugins.
-
 ## Comandos a ejecutar
 
 Primero debemos de instalar las dependencias necesarias con:
@@ -58,14 +40,3 @@ Los datos del .env deben ser correspondientes a tu SQlServer.
 3. Debes de activar la comunicacion TCP/IP para eso puedes revisar la documentación oficial: [Activar TCP/IP][2]
 
 [2]: https://learn.microsoft.com/es-es/sql/database-engine/configure-windows/configure-a-server-to-listen-on-a-specific-tcp-port?view=sql-server-ver16
-
-## Importante
-
-Algunas apis de eliminación no funcionan debido a que el campo tiene hijos que referencian su clave primaria, y las llaves foraneas no estan condfiguradas para hace eliminación en cascada.
-
-## Ejemplos de uso de las rutas
-
-Las rutas de las apis se encuentran dentro de la carpeta request donde cada modelo tiene sus rutas especificas y el uso de la mismas.
-Para poder ocuparlas con los archivos .http use la extención REST Client.
-
-![GIF API USE](public/sample_api_use.gif)
